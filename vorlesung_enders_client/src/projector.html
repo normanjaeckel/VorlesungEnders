@@ -1,0 +1,15 @@
+Projector
+
+<div ng-if="ctrl.projectorContent.type === 'topic'">
+
+    Topic
+
+</div>
+
+<div ng-if="ctrl.projectorContent.type === 'slide'">
+
+    <h1>{{ ctrl.projectorContent.title }}</h1>
+
+    {{ ctrl.projectorContent.content }}
+
+</div>

@@ -1,0 +1,18 @@
+# Patterns of intentionally untracked files that Git should ignore
+
+# Python compiled files
+*.pyc
+__pycache__/
+
+# Virtual Python Environment builder
+.virtualenv/
+
+# JavaScript tools and libraries
+vorlesung_enders_client/node_modules/
+vorlesung_enders_client/jspm_packages/
+
+# Deployment files
+personal_data
+
+# Private development data
+private/

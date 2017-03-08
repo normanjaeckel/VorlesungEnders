@@ -1,0 +1,19 @@
+<h1>Foliensteuerung</h1>
+
+<h2>Gliederung</h2>
+
+<button ng-click="ctrl.topicBack()">Zurück</button>
+
+<button ng-click="ctrl.toCurrentTopic()">Aktueller Punkt</button>
+
+<button ng-click="ctrl.topicForward()">Vor</button>
+
+<button ng-click="ctrl.switchToProjector()">
+    Switch to projector
+</button>
+
+<h2>Zusatzfolien</h2>
+
+<button ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
+  {{ slide.button_text }}
+</button>

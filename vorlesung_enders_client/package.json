@@ -1,0 +1,19 @@
+{
+  "name": "vorlesung_enders_client",
+  "private": true,
+  "dependencies": {
+    "jspm": "^0.16.52"
+  },
+  "jspm": {
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.6.3",
+      "lodash": "npm:lodash@^4.17.4"
+    },
+    "devDependencies": {}
+  },
+  "devDependencies": {
+    "express": "^4.15.2",
+    "http-proxy": "^1.16.2",
+    "http-server": "^0.9.0"
+  }
+}
