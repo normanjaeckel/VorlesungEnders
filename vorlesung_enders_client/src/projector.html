@@ -1,15 +1,21 @@
-Projector
+<button ng-click="ctrl.switchToControlPanel()">
+  Switch to control panel
+</button>
 
 <div ng-if="ctrl.projectorContent.type === 'topic'">
 
-    Topic
+  <h1>{{ ctrl.projectorContent.title }}</h1>
+
+  <p ng-repeat="child in ctrl.projectorContent.children" ng-class="{'highlight': ctrl.projectorContent.highlight === child.id}">
+    {{ child.title }}
+  </p>
 
 </div>
 
 <div ng-if="ctrl.projectorContent.type === 'slide'">
 
-    <h1>{{ ctrl.projectorContent.title }}</h1>
+  <h1>{{ ctrl.projectorContent.title }}</h1>
 
-    {{ ctrl.projectorContent.content }}
+  <div ng-bind-html="ctrl.projectorContent.content"></div>
 
 </div>

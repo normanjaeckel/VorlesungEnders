@@ -9,8 +9,15 @@
 <button ng-click="ctrl.topicForward()">Vor</button>
 
 <button ng-click="ctrl.switchToProjector()">
-    Switch to projector
+  Switch to projector
 </button>
+
+<dl>
+  <dt>Current topic</dt>
+  <dd>{{ ctrl.currentTopic }}</dd>
+  <dt>Projector content</dt>
+  <dd>{{ ctrl.projectorContent }}</dd>
+</dl>
 
 <h2>Zusatzfolien</h2>
 

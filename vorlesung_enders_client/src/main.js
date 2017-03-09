@@ -1,51 +1,56 @@
 require('angular');
+require('angular-sanitize');
 var _ = require('lodash');
 
 
-angular.module('vorlesung_enders_client', [])
+angular.module('vorlesung_enders_client', ['ngSanitize'])
 
-.factory('DataStore', function () {
-    var topics = [];
-    var slides = [];
-    var currentTopic;
-    var projectorContent = {};
-    return {
-        topics: topics,
-        slides: slides,
-        setStore: function (data) {
-            this.topics = data.topics;
-            this.slides = data.slides;
-        },
-        currentTopic: currentTopic,
-        projectorContent: projectorContent,
-        setProjectorContent: function (data) {
-            this.projectorContent = data;
-            if (data && data.type === 'topic') {
-                this.currentTopic = data;
-            }
-        },
-    };
+.constant('firstSlide', {
+    type: 'topic',
+    title: 'Gliederung der Veranstaltung',
 })
 
-.factory('TopicTree', ['DataStore', function (DataStore) {
+.factory('DataStore', ['firstSlide', function (firstSlide) {
+    return {
+        topics: [],
+        slides: [],
+        setStore: function (data) {
+            var DataStore = this;
+            DataStore.topics = data.topics;
+            DataStore.slides = data.slides;
+        },
+        currentTopic: firstSlide,
+        projectorContent: firstSlide,
+        setProjectorContent: function (data) {
+            var DataStore = this;
+            DataStore.projectorContent = data;
+            if (data && data.type === 'topic') {
+                DataStore.currentTopic = data;
+            }
+            return {
+                currentTopic: DataStore.currentTopic,
+                projectorContent: DataStore.projectorContent,
+            };
+        },
+    };
+}])
+
+.factory('TopicTree', ['DataStore', 'firstSlide', function (DataStore, firstSlide) {
     var getData = function (topic) {
         var data = [];
-        if (topic.children.length === 0) {
-            data.push({
-                type: 'topic',
-                id: topic.id,
-            });
-        } else {
-            data.push({
-                type: 'topic',
-                id: topic.id,
-                withChildren: true,
-            });
+        data.push({
+            type: 'topic',
+            id: topic.id,
+            title: topic.title,
+            children: topic.children,
+        });
+        if (topic.children.length > 0) {
             angular.forEach(topic.children, function (child) {
                 data.push({
                     type: 'topic',
                     id: topic.id,
-                    withChildren: true,
+                    title: topic.title,
+                    children: topic.children,
                     highlight: child.id,
                 });
                 data = data.concat(getData(child));
@@ -63,9 +68,11 @@ angular.module('vorlesung_enders_client', [])
             var index = _.findIndex(allProjectorContent, function (item) {
                 return item.id === topic.id && item.withChildren == topic.withChildren && item.highlight == topic.highlight;
             });
-            var previous = topic;
+            var previous;
             if (index > 0) {
                 previous = allProjectorContent[index-1];
+            } else {
+                previous = firstSlide;
             }
             return previous;
         },
@@ -77,20 +84,23 @@ angular.module('vorlesung_enders_client', [])
             var index = _.findIndex(allProjectorContent, function (item) {
                 return item.id === topic.id && item.withChildren == topic.withChildren && item.highlight == topic.highlight;
             });
-            var next = topic;
+            var next;
             if (index < allProjectorContent.length-1) {
                 next = allProjectorContent[index+1];
+            } else {
+                next = firstSlide;
             }
             return next;
         },
-    }
+    };
 }])
 
-.run(['$http', 'DataStore', function ($http, DataStore) {
+.run(['$http', '$rootScope', 'DataStore', function ($http, $rootScope, DataStore) {
     $http.get('/data/')
     .then(
         function (response) {
             DataStore.setStore(response.data);
+            $rootScope.ready = true;
         },
         function (error) {
             console.error(error);
@@ -104,8 +114,13 @@ angular.module('vorlesung_enders_client', [])
         scope: {},
         templateUrl: 'src/projector.html',
         controllerAs: 'ctrl',
-        controller: ['DataStore', function (DataStore) {
-            this.projectorContent = DataStore.projectorContent;
+        controller: ['$rootScope', 'DataStore', function ($rootScope, DataStore) {
+            var ctrl = this;
+            ctrl.projectorContent = DataStore.projectorContent;
+
+            ctrl.switchToControlPanel = function () {
+                $rootScope.showProjector = false;
+            };
         }],
 
     };
@@ -118,60 +133,43 @@ angular.module('vorlesung_enders_client', [])
         templateUrl: 'src/controlPanel.html',
         controllerAs: 'ctrl',
         controller: ['$rootScope', 'DataStore', 'TopicTree', function ($rootScope, DataStore, TopicTree) {
-            this.topics = DataStore.topics;
-            this.slides = DataStore.slides;
+            var ctrl = this;
+            ctrl.slides = DataStore.slides;
+            ctrl.currentTopic = DataStore.currentTopic;
+            ctrl.projectorContent = DataStore.projectorContent;
 
-            this.toCurrentTopic = function () {
-                var data;
-                if (DataStore.currentTopic) {
-                    data = DataStore.currentTopic;
-                } else {
-                    data = {
-                        type: 'topic',
-                        id: this.topics[0].id,
-                        withChildren: true,
-                    };
-                }
-                DataStore.setProjectorContent(data);
-            };
-            this.topicBack = function () {
-                var data;
-                if (DataStore.currentTopic == null) {
-                    data = {
-                        type: 'topic',
-                        id: this.topics[0].id,
-                        withChildren: true,
-                    };
-                } else {
-                    data = TopicTree.getPrevious(DataStore.currentTopic);
-                }
-                DataStore.setProjectorContent(data);
-            };
-            this.topicForward = function () {
-                var data;
-                if (DataStore.currentTopic == null) {
-                    data = {
-                        type: 'topic',
-                        id: this.topics[0].id,
-                        withChildren: true,
-                    };
-                } else {
-                    data = TopicTree.getNext(DataStore.currentTopic);
-                }
-                DataStore.setProjectorContent(data);
+            updateStatus = function (status) {
+                ctrl.currentTopic = status.currentTopic;
+                ctrl.projectorContent = status.projectorContent;
             };
 
-            this.switchToProjector = function () {
+            ctrl.toCurrentTopic = function () {
+                updateStatus(
+                    DataStore.setProjectorContent(ctrl.currentTopic)
+                );
+            };
+            ctrl.topicBack = function () {
+                updateStatus(
+                    DataStore.setProjectorContent(TopicTree.getPrevious(ctrl.currentTopic))
+                );
+            };
+            ctrl.topicForward = function () {
+                updateStatus(
+                    DataStore.setProjectorContent(TopicTree.getNext(ctrl.currentTopic))
+                );
+            };
+
+            ctrl.switchToProjector = function () {
                 $rootScope.showProjector = true;
             };
 
-            this.activateSlideButton = function (slide) {
-                DataStore.setProjectorContent({
+            ctrl.activateSlideButton = function (slide) {
+                updateStatus(DataStore.setProjectorContent({
                     type: 'slide',
                     id: slide.id,
                     title: slide.title,
                     content: slide.content,
-                });
+                }));
             };
         }],
     };

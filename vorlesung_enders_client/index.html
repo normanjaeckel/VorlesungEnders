@@ -9,16 +9,27 @@
   <script>
     System.import('src/main.js');
   </script>
+
+  <style>
+    .highlight {
+      color: red;
+    }
+  </style>
+
 </head>
 
 <body>
 
-  <div ng-if="showProjector">
-    <projector> </projector>
-  </div>
+  <div ng-if="ready">
 
-  <div ng-if="!showProjector">
-    <control-panel> </control-panel>
+    <div ng-if="showProjector">
+      <projector> </projector>
+    </div>
+
+    <div ng-if="!showProjector">
+      <control-panel> </control-panel>
+    </div>
+
   </div>
 
 </body>
