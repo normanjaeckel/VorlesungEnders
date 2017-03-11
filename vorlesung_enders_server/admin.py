@@ -10,3 +10,5 @@ admin.site.register(
     Topic,
     DraggableMPTTAdmin,
 )
+
+admin.site.site_url = None

@@ -1,6 +1,8 @@
-require('angular');
+var angular = require('angular'),
+    _ = require('lodash');
+
 require('angular-sanitize');
-var _ = require('lodash');
+require('angular-wamp');
 
 
 angular.module('vorlesung_enders_client', ['ngSanitize'])
@@ -96,7 +98,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
 }])
 
 .run(['$http', '$rootScope', 'DataStore', function ($http, $rootScope, DataStore) {
-    $http.get('/data/')
+    $http.get('/app/data/')
     .then(
         function (response) {
             DataStore.setStore(response.data);

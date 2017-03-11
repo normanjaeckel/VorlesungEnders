@@ -4,18 +4,27 @@
   "dependencies": {
     "jspm": "^0.16.52"
   },
-  "jspm": {
-    "dependencies": {
-      "angular": "github:angular/bower-angular@^1.6.3",
-      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.3",
-      "lodash": "npm:lodash@^4.17.4"
-    },
-    "devDependencies": {}
-  },
   "devDependencies": {
     "express": "^4.15.2",
     "http-proxy": "^1.16.2",
     "http-server": "^0.9.0",
     "jshint": "^2.9.4"
+  },
+  "jspm": {
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.6.3",
+      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.3",
+      "angular-wamp": "npm:angular-wamp@^0.3.3",
+      "lodash": "npm:lodash@^4.17.4"
+    },
+    "devDependencies": {},
+    "overrides": {
+      "npm:ws@2.2.0": {
+        "map": {
+          "bufferutil": "no-module",
+          "utf-8-validate": "no-module"
+        }
+      }
+    }
   }
 }
