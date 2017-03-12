@@ -14,17 +14,9 @@
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.6.3",
       "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.3",
-      "angular-wamp": "npm:angular-wamp@^0.3.3",
+      "autobahn": "npm:autobahn@^0.11.2",
       "lodash": "npm:lodash@^4.17.4"
     },
-    "devDependencies": {},
-    "overrides": {
-      "npm:ws@2.2.0": {
-        "map": {
-          "bufferutil": "no-module",
-          "utf-8-validate": "no-module"
-        }
-      }
-    }
+    "devDependencies": {}
   }
 }
