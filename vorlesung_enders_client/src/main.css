@@ -1,0 +1,17 @@
+body {
+  font-family: sans;
+}
+
+.projector-header {
+  text-align: center;
+}
+
+.projector-content {
+  font-size: 200%;
+  margin: 2em;
+  height: 500px;
+}
+
+.highlight {
+  font-weight: bold;
+}

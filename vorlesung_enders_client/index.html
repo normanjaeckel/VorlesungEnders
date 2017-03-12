@@ -4,33 +4,25 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VorlesungEnders projection tool</title>
   <script src="jspm_packages/system.js"></script>
   <script src="config.js"></script>
   <script>
     System.import('src/main.js');
   </script>
-
-  <style>
-    .highlight {
-      color: red;
-    }
-  </style>
-
 </head>
 
 <body>
-
+  <div ng-if="!ready">
+    <h1>Anwendung lädt …</h1>
+  </div>
   <div ng-if="ready">
-
     <div ng-if="showProjector">
       <projector> </projector>
     </div>
-
     <div ng-if="!showProjector">
       <control-panel> </control-panel>
     </div>
-
   </div>
-
 </body>
 </html>

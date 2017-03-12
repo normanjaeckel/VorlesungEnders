@@ -1,21 +1,22 @@
+<div class="projector-header">
+  <p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
+</div>
+
+<div class="projector-content">
+  <div ng-if="ctrl.projectorContent.type === 'topic'">
+    <h1>{{ ctrl.projectorContent.title }}</h1>
+    <p ng-repeat="child in ctrl.projectorContent.children" ng-class="{'highlight': ctrl.projectorContent.highlight === child.id}">
+      {{ child.title }}
+    </p>
+  </div>
+  <div ng-if="ctrl.projectorContent.type === 'slide'">
+    <h1>{{ ctrl.projectorContent.title }}</h1>
+    <div ng-bind-html="ctrl.projectorContent.content"></div>
+  </div>
+</div>
+
+<hr>
+
 <button ng-click="ctrl.switchToControlPanel()">
-  Switch to control panel
+  Zur Foliensteuerung
 </button>
-
-<div ng-if="ctrl.projectorContent.type === 'topic'">
-
-  <h1>{{ ctrl.projectorContent.title }}</h1>
-
-  <p ng-repeat="child in ctrl.projectorContent.children" ng-class="{'highlight': ctrl.projectorContent.highlight === child.id}">
-    {{ child.title }}
-  </p>
-
-</div>
-
-<div ng-if="ctrl.projectorContent.type === 'slide'">
-
-  <h1>{{ ctrl.projectorContent.title }}</h1>
-
-  <div ng-bind-html="ctrl.projectorContent.content"></div>
-
-</div>

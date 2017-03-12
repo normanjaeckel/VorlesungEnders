@@ -1,22 +1,28 @@
+<p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
+
 <h1>Foliensteuerung</h1>
+
+<button ng-click="ctrl.switchToProjector()">
+  Zum Projektor
+</button>
 
 <h2>Gliederung</h2>
 
-<button ng-click="ctrl.topicBack()">Zurück</button>
+<button ng-click="ctrl.topicBack(50)">– 50</button>
+<button ng-click="ctrl.topicBack(10)">– 10</button>
+<button ng-click="ctrl.topicBack(1)">– 1</button>
 
 <button ng-click="ctrl.toCurrentTopic()">Aktueller Punkt</button>
 
-<button ng-click="ctrl.topicForward()">Vor</button>
-
-<button ng-click="ctrl.switchToProjector()">
-  Switch to projector
-</button>
+<button ng-click="ctrl.topicForward(1)">+ 1</button>
+<button ng-click="ctrl.topicForward(10)">+ 10</button>
+<button ng-click="ctrl.topicForward(50)">+ 50</button>
 
 <dl>
-  <dt>Current topic</dt>
-  <dd>{{ ctrl.currentTopic }}</dd>
-  <dt>Projector content</dt>
-  <dd>{{ ctrl.projectorContent }}</dd>
+  <dt>Aktueller Gliederungspunkt:</dt>
+  <dd>{{ ctrl.currentTopic.title }}</dd>
+  <dt>Aktueller Inhalt des Projektors:</dt>
+  <dd>{{ ctrl.projectorContent.title }}</dd>
 </dl>
 
 <h2>Zusatzfolien</h2>
@@ -27,4 +33,4 @@
 
 <h2>Administration</h2>
 
-<a href="/app/admin/"><button>To admin panel</button></a>
+<a href="/app/admin/"><button>Zur Administration</button></a>

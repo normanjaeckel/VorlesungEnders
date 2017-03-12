@@ -4,6 +4,11 @@
 *.pyc
 __pycache__/
 
+# Crossbar.io node files
+.crossbar/key.priv
+.crossbar/key.pub
+.crossbar/node.pid
+
 # Virtual Python Environment builder
 .virtualenv/
 

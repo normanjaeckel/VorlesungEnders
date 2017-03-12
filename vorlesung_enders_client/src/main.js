@@ -1,40 +1,101 @@
 var angular = require('angular'),
+    autobahn = require('autobahn'),
     _ = require('lodash');
 
 require('angular-sanitize');
-require('angular-wamp');
-
+require('./main.css!');
 
 angular.module('vorlesung_enders_client', ['ngSanitize'])
+
+.constant('Metadata', {
+    lecturer: 'Professor Dr. Christoph Enders',
+    eventName: 'Vorlesung Polizeirecht',
+    season: 'Sommersemester 2017',
+})
+
+.constant('setProjectorContentURI', 'VorlesungEnders.setProjectorContent')
 
 .constant('firstSlide', {
     type: 'topic',
     title: 'Gliederung der Veranstaltung',
 })
 
-.factory('DataStore', ['firstSlide', function (firstSlide) {
-    return {
-        topics: [],
-        slides: [],
-        setStore: function (data) {
-            var DataStore = this;
-            DataStore.topics = data.topics;
-            DataStore.slides = data.slides;
+.factory('DataStore', [
+    'firstSlide',
+    function (firstSlide) {
+        var topics = [],
+            slides = [],
+            currentTopic = firstSlide,
+            projectorContent = firstSlide
+        return {
+            getTopics: function () {
+                return topics;
+            },
+            getSlides: function () {
+                return slides;
+            },
+            getCurrentTopic: function () {
+                return currentTopic;
+            },
+            getProjectorContent: function () {
+                return projectorContent;
+            },
+            setStore: function (data) {
+                topics = data.topics;
+                slides = data.slides;
+            },
+            setProjectorContent: function (data) {
+                projectorContent = data;
+                if (data && data.type === 'topic') {
+                    currentTopic = data;
+                }
+                return data;
+            },
+        };
+    }
+])
+
+.run(['$http', '$rootScope', 'DataStore', function ($http, $rootScope, DataStore) {
+    $http.get('/app/data/')
+    .then(
+        function (response) {
+            DataStore.setStore(response.data);
+            $rootScope.ready = true;
         },
-        currentTopic: firstSlide,
-        projectorContent: firstSlide,
-        setProjectorContent: function (data) {
-            var DataStore = this;
-            DataStore.projectorContent = data;
-            if (data && data.type === 'topic') {
-                DataStore.currentTopic = data;
-            }
-            return {
-                currentTopic: DataStore.currentTopic,
-                projectorContent: DataStore.projectorContent,
-            };
-        },
-    };
+        function (error) {
+            console.error(error);
+        }
+    );
+}])
+
+.factory('WAMPConnection', [
+    '$timeout',
+    'setProjectorContentURI',
+    'DataStore',
+    function ($timeout, setProjectorContentURI, DataStore) {
+        var protocol = location.protocol === 'http:' ? 'ws:' : 'wss:';
+        var connection = new autobahn.Connection({
+            url: protocol + '//' + location.host + '/ws',
+            realm: 'realm1'
+        });
+        connection.onopen = function (session) {
+            session.subscribe(setProjectorContentURI, function (args, kwargs, details) {
+                $timeout(
+                    function () {
+                        DataStore.setProjectorContent(kwargs);
+                    }
+                )
+
+            });
+        };
+        return {
+            connection: connection,
+        };
+    }
+])
+
+.run(['WAMPConnection', function (WAMPConnection) {
+    WAMPConnection.connection.open();
 }])
 
 .factory('TopicTree', ['DataStore', 'firstSlide', function (DataStore, firstSlide) {
@@ -60,11 +121,10 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
         }
         return data;
     };
-
     return {
         getPrevious: function (topic) {
             var allProjectorContent = [];
-            angular.forEach(DataStore.topics, function (rootTopic) {
+            angular.forEach(DataStore.getTopics(), function (rootTopic) {
                 allProjectorContent = allProjectorContent.concat(getData(rootTopic));
             });
             var index = _.findIndex(allProjectorContent, function (item) {
@@ -73,14 +133,16 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
             var previous;
             if (index > 0) {
                 previous = allProjectorContent[index-1];
-            } else {
+            } else if (index === 0) {
                 previous = firstSlide;
+            } else {
+                previous = _.last(allProjectorContent);
             }
             return previous;
         },
         getNext: function (topic) {
             var allProjectorContent = [];
-            angular.forEach(DataStore.topics, function (rootTopic) {
+            angular.forEach(DataStore.getTopics(), function (rootTopic) {
                 allProjectorContent = allProjectorContent.concat(getData(rootTopic));
             });
             var index = _.findIndex(allProjectorContent, function (item) {
@@ -97,29 +159,26 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
     };
 }])
 
-.run(['$http', '$rootScope', 'DataStore', function ($http, $rootScope, DataStore) {
-    $http.get('/app/data/')
-    .then(
-        function (response) {
-            DataStore.setStore(response.data);
-            $rootScope.ready = true;
-        },
-        function (error) {
-            console.error(error);
-        }
-    );
-}])
-
 .directive('projector', function () {
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'src/projector.html',
         controllerAs: 'ctrl',
-        controller: ['$rootScope', 'DataStore', function ($rootScope, DataStore) {
+        controller: ['$rootScope', '$scope', 'Metadata', 'DataStore', function ($rootScope, $scope, Metadata, DataStore) {
             var ctrl = this;
-            ctrl.projectorContent = DataStore.projectorContent;
-
+            ctrl.Metadata = Metadata
+            $scope.$watch(
+                function () {
+                    return DataStore.getProjectorContent();
+                },
+                function (newValue) {
+                    ctrl.projectorContent = newValue;
+                    if (ctrl.projectorContent.id == null) {
+                        ctrl.projectorContent.children = DataStore.getTopics();
+                    }
+                }
+            );
             ctrl.switchToControlPanel = function () {
                 $rootScope.showProjector = false;
             };
@@ -128,51 +187,86 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
     };
 })
 
-.directive('controlPanel', function () {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'src/controlPanel.html',
-        controllerAs: 'ctrl',
-        controller: ['$rootScope', 'DataStore', 'TopicTree', function ($rootScope, DataStore, TopicTree) {
-            var ctrl = this;
-            ctrl.slides = DataStore.slides;
-            ctrl.currentTopic = DataStore.currentTopic;
-            ctrl.projectorContent = DataStore.projectorContent;
+.directive('controlPanel', [
+    'setProjectorContentURI',
+    'WAMPConnection',
+    function (setProjectorContentURI, WAMPConnection) {
+        return {
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'src/controlPanel.html',
+            controllerAs: 'ctrl',
+            controller: ['$rootScope', '$scope', 'Metadata', 'DataStore', 'TopicTree', function ($rootScope, $scope, Metadata, DataStore, TopicTree) {
+                var ctrl = this;
+                ctrl.Metadata = Metadata;
+                ctrl.slides = DataStore.getSlides();
 
-            updateStatus = function (status) {
-                ctrl.currentTopic = status.currentTopic;
-                ctrl.projectorContent = status.projectorContent;
-            };
-
-            ctrl.toCurrentTopic = function () {
-                updateStatus(
-                    DataStore.setProjectorContent(ctrl.currentTopic)
+                $scope.$watch(
+                    function () {
+                        return DataStore.getCurrentTopic();
+                    },
+                    function (newValue) {
+                        ctrl.currentTopic = newValue;
+                    }
                 );
-            };
-            ctrl.topicBack = function () {
-                updateStatus(
-                    DataStore.setProjectorContent(TopicTree.getPrevious(ctrl.currentTopic))
-                );
-            };
-            ctrl.topicForward = function () {
-                updateStatus(
-                    DataStore.setProjectorContent(TopicTree.getNext(ctrl.currentTopic))
-                );
-            };
 
-            ctrl.switchToProjector = function () {
-                $rootScope.showProjector = true;
-            };
+                $scope.$watch(
+                    function () {
+                        return DataStore.getProjectorContent();
+                    },
+                    function (newValue) {
+                        ctrl.projectorContent = newValue;
+                    }
+                );
 
-            ctrl.activateSlideButton = function (slide) {
-                updateStatus(DataStore.setProjectorContent({
-                    type: 'slide',
-                    id: slide.id,
-                    title: slide.title,
-                    content: slide.content,
-                }));
-            };
-        }],
-    };
-});
+                var updateStatus = function (data) {
+                    WAMPConnection.connection.session.publish(
+                        setProjectorContentURI,
+                        [],
+                        data
+                    );
+                };
+
+                ctrl.toCurrentTopic = function () {
+                    updateStatus(
+                        DataStore.setProjectorContent(ctrl.currentTopic)
+                    );
+                };
+                ctrl.topicBack = function (count) {
+                    var topic = ctrl.currentTopic;
+                    _.forEach(_.range(count), function () {
+                        topic = TopicTree.getPrevious(topic)
+                    });
+                    updateStatus(
+                        DataStore.setProjectorContent(topic)
+                    );
+                };
+                ctrl.topicForward = function (count) {
+                    var topic = ctrl.currentTopic;
+                    _.forEach(_.range(count), function () {
+                        topic = TopicTree.getNext(topic)
+                    });
+                    updateStatus(
+                        DataStore.setProjectorContent(topic)
+                    );
+                };
+
+                ctrl.switchToProjector = function () {
+                    $rootScope.showProjector = true;
+                };
+
+                ctrl.activateSlideButton = function (slide) {
+                    updateStatus(
+                        DataStore.setProjectorContent({
+                            type: 'slide',
+                            id: slide.id,
+                            title: slide.title,
+                            content: slide.content,
+                        })
+                    );
+                };
+            }],
+        };
+    }
+])
+;

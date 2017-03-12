@@ -11,6 +11,7 @@ System.config({
     "angular": "github:angular/bower-angular@1.6.3",
     "angular-sanitize": "github:angular/bower-angular-sanitize@1.6.3",
     "autobahn": "npm:autobahn@0.11.2",
+    "css": "github:systemjs/plugin-css@0.1.33",
     "lodash": "npm:lodash@4.17.4",
     "github:angular/bower-angular-sanitize@1.6.3": {
       "angular": "github:angular/bower-angular@1.6.3"

@@ -58,8 +58,8 @@ class Slide(models.Model):
     )
     class Meta:
         ordering = ('weight',)
-        verbose_name = 'Folie'
-        verbose_name_plural = 'Folien'
+        verbose_name = 'Zusatzfolie'
+        verbose_name_plural = 'Zusatzfolien'
 
     def __str__(self):
         return '{} ({})'.format(self.title, self.button_text)
