@@ -2,6 +2,10 @@ body {
   font-family: sans;
 }
 
+.slide-button {
+  margin-right: 0.5em;
+}
+
 .projector-header {
   text-align: center;
 }
@@ -9,7 +13,7 @@ body {
 .projector-content {
   font-size: 200%;
   margin: 2em;
-  height: 500px;
+  min-height: 500px;
 }
 
 .highlight {
