@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 import sys
 
 from django.utils.crypto import get_random_string
@@ -10,7 +11,7 @@ DEPLOYMENT_DIRECTORY_NAME = 'personal_data'
 
 def create_deployment_dir():
     # Creates the deployment directory with settings and wsgi file if
-    # inexistent.
+    # inexistent. Then also copy crossbar node config.
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     if not os.path.exists(os.path.join(base_dir, DEPLOYMENT_DIRECTORY_NAME)):
@@ -61,6 +62,14 @@ def create_deployment_dir():
                 'wsgi.py')
             with open(wsgi_path, 'w') as new_wsgi:
                 new_wsgi.write(wsgi)
+
+        # Copy crossbar node config.
+        if not os.path.exists(os.path.join(base_dir, '.crossbar')):
+            os.makedirs(os.path.join(base_dir, '.crossbar'))
+        shutil.copyfile(
+            os.path.join(base_dir, 'crossbar_default_config.json'),
+            os.path.join(base_dir, '.crossbar', 'config.json')
+        )
 
 
 if __name__ == "__main__":
