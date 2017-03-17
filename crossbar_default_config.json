@@ -54,7 +54,7 @@
                             },
                             "/": {
                                 "type": "static",
-                                "directory": "../vorlesung_enders_client"
+                                "directory": "../personal_data/client"
                             }
                         }
                     }

@@ -26,7 +26,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
         var topics = [],
             slides = [],
             currentTopic = firstSlide,
-            projectorContent = firstSlide
+            projectorContent = firstSlide;
         return {
             getTopics: function () {
                 return topics;
@@ -84,8 +84,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     function () {
                         DataStore.setProjectorContent(kwargs);
                     }
-                )
-
+                );
             });
         };
         return {
@@ -171,14 +170,14 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
         controllerAs: 'ctrl',
         controller: ['$rootScope', '$scope', 'Metadata', 'DataStore', function ($rootScope, $scope, Metadata, DataStore) {
             var ctrl = this;
-            ctrl.Metadata = Metadata
+            ctrl.Metadata = Metadata;
             $scope.$watch(
                 function () {
                     return DataStore.getProjectorContent();
                 },
                 function (newValue) {
                     ctrl.projectorContent = newValue;
-                    if (ctrl.projectorContent.id == null) {
+                    if (!ctrl.projectorContent.id) {
                         ctrl.projectorContent.children = DataStore.getTopics();
                     }
                 }
@@ -252,7 +251,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                 ctrl.topicBack = function (count) {
                     var topic = ctrl.currentTopic;
                     _.forEach(_.range(count), function () {
-                        topic = TopicTree.getPrevious(topic)
+                        topic = TopicTree.getPrevious(topic);
                     });
                     updateStatus(
                         DataStore.setProjectorContent(topic)
@@ -261,7 +260,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                 ctrl.topicForward = function (count) {
                     var topic = ctrl.currentTopic;
                     _.forEach(_.range(count), function () {
-                        topic = TopicTree.getNext(topic)
+                        topic = TopicTree.getNext(topic);
                     });
                     updateStatus(
                         DataStore.setProjectorContent(topic)

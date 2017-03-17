@@ -2,6 +2,7 @@
   "name": "vorlesung_enders_client",
   "private": true,
   "dependencies": {
+    "gulp": "^3.9.1",
     "jspm": "^0.16.52"
   },
   "devDependencies": {

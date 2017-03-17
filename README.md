@@ -22,6 +22,8 @@ Run:
     $ cd vorlesung_enders_client
     $ yarn
     $ node_modules/.bin/jspm install
+    $ node_modules/.bin/jspm bundle src/main
+    $ node_modules/.bin/gulp
     $ cd ..
 
     $ PYTHONPATH=`pwd`:$PYTHONPATH crossbar start
