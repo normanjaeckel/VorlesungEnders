@@ -24,7 +24,7 @@ BASE_APP_PATH = '/app'
 SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -83,6 +83,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'personal_data', 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'vorlesung_enders',
+#        'USER': 'vorlesung_enders',
+#        'PASSWORD': '...',
+#        'HOST': 'localhost',
+#        'PORT': '5432'
+#    }
+# }
 
 
 # Password validation
