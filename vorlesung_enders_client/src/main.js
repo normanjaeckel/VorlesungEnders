@@ -105,6 +105,8 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
             type: 'topic',
             id: topic.id,
             title: topic.title,
+            mark: topic.mark,
+            allMarks: topic.allMarks,
             children: topic.children,
         });
         if (topic.children.length > 0) {
@@ -113,6 +115,8 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     type: 'topic',
                     id: topic.id,
                     title: topic.title,
+                    mark: topic.mark,
+                    allMarks: topic.allMarks,
                     children: topic.children,
                     highlight: child.id,
                 });
@@ -200,6 +204,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                 var ctrl = this;
                 ctrl.Metadata = Metadata;
                 ctrl.slides = DataStore.getSlides();
+                ctrl.topics = DataStore.getTopics();
 
                 $scope.$watch(
                     function () {
@@ -230,6 +235,18 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                 ctrl.toCurrentTopic = function () {
                     updateStatus(
                         DataStore.setProjectorContent(ctrl.currentTopic)
+                    );
+                };
+                ctrl.toTopic = function (topic) {
+                    updateStatus(
+                        DataStore.setProjectorContent({
+                            type: 'topic',
+                            id: topic.id,
+                            title: topic.title,
+                            mark: topic.mark,
+                            allMarks: topic.allMarks,
+                            children: topic.children,
+                        })
                     );
                 };
                 ctrl.topicBack = function (count) {

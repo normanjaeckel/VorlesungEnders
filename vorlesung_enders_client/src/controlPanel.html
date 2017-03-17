@@ -2,35 +2,63 @@
 
 <h1>Foliensteuerung</h1>
 
-<button ng-click="ctrl.switchToProjector()">
-  Zum Projektor
-</button>
+<p>
+  Aktuell auf dem Projektor: {{ ctrl.projectorContent.allMarks }} {{ ctrl.projectorContent.title }}
+  <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight != null">
+    (Unterpunkt hervorgehoben)
+  </span>
+  <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight == null">
+    (Überblick)
+  </span>
+</p>
+
 
 <h2>Gliederung</h2>
+
+<p>
+  Aktueller Gliederungspunkt: {{ ctrl.currentTopic.allMarks }} {{ ctrl.currentTopic.title }}
+  <span ng-show="ctrl.currentTopic.highlight != null">
+    (Unterpunkt hervorgehoben)
+  </span>
+  <span ng-show="ctrl.currentTopic.highlight == null">
+    (Überblick)
+  </span>
+</p>
 
 <button ng-click="ctrl.topicBack(50)">– 50</button>
 <button ng-click="ctrl.topicBack(10)">– 10</button>
 <button ng-click="ctrl.topicBack(1)">– 1</button>
 
-<button ng-click="ctrl.toCurrentTopic()">Aktueller Punkt</button>
+&harr;
 
 <button ng-click="ctrl.topicForward(1)">+ 1</button>
 <button ng-click="ctrl.topicForward(10)">+ 10</button>
 <button ng-click="ctrl.topicForward(50)">+ 50</button>
 
-<dl>
-  <dt>Aktueller Gliederungspunkt:</dt>
-  <dd>{{ ctrl.currentTopic.title }}</dd>
-  <dt>Aktueller Inhalt des Projektors:</dt>
-  <dd>{{ ctrl.projectorContent.title }}</dd>
-</dl>
 
 <h2>Zusatzfolien</h2>
+
+<p>
+  <button ng-click="ctrl.toCurrentTopic()" ng-disabled="ctrl.currentTopic == ctrl.projectorContent">&curarr;</button>
+  Zurück zur Gliederung
+</p>
 
 <button ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
   {{ slide.button_text }}
 </button>
 
-<h2>Administration</h2>
+<h2>Gliederung im Überblick</h2>
+
+<p ng-repeat="topic in ctrl.topics">
+  <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
+  {{ topic.allMarks }} {{ topic.title }}
+</p>
+
+
+<h2>Sonstiges</h2>
+
+<button ng-click="ctrl.switchToProjector()">
+  Zum Projektor
+</button>
 
 <a href="/app/admin/"><button>Zur Administration</button></a>

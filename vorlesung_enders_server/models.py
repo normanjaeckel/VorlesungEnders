@@ -10,10 +10,15 @@ class Topic(MPTTModel):
         related_name='children',
         db_index=True
     )
+    mark = models.CharField(
+        'Gliederungszeichen',
+        max_length=10,
+        help_text='Die Gliederungszeichen aller Ebenen werden zusammengesetzt. Beispiel: Aus b) wird § 3 II. 2. b).'
+    )
     title = models.CharField(
         'Gliederungsüberschrift',
         max_length=255,
-        help_text='Beispiel: § 3 II. 2. b) Inanspruchnahme Nichtverantwortlicher'
+        help_text='Beispiel: Inanspruchnahme Nichtverantwortlicher'
     )
 
     class Meta:
@@ -21,12 +26,17 @@ class Topic(MPTTModel):
         verbose_name_plural = 'Gliederungspunkte'
 
     def __str__(self):
-        return self.title
+        return '{} {}'.format(self.mark, self.title)
+
+    def get_all_marks(self):
+        return ' '.join((ancestor.mark for ancestor in self.get_ancestors(include_self=True)))
 
     def generate_data(self):
         data = {
             'id': self.id,
             'title': self.title,
+            'mark': self.mark,
+            'allMarks': self.get_all_marks(),
             'children': []
         }
         for child in self.get_children():
