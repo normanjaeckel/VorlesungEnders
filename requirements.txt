@@ -2,4 +2,5 @@ Django==1.10.6
 django-mptt==0.8.7
 django-constance==2.0.0
 django-picklefield==0.3.2
+django-ckeditor==5.2.1
 crossbar==17.2.1

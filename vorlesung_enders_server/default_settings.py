@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mptt',
     'constance',
     'constance.backends.database',
+    'ckeditor',
     'vorlesung_enders_server',
 ]
 
@@ -157,3 +158,19 @@ CONSTANCE_CONFIG = OrderedDict([
     ('EVENT_NAME', ('Vorlesung Polizeirecht', 'Name der Veranstaltung')),
     ('SEASON', ('Sommersemester 2017', 'Semester')),
 ])
+
+
+# Django CKEditor
+# https://github.com/django-ckeditor/django-ckeditor
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Undo', 'Redo', '-', 'RemoveFormat', 'Source', '-', 'About'],
+        ],
+    }
+}

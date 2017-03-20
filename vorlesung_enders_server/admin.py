@@ -1,3 +1,5 @@
+from ckeditor.widgets import CKEditorWidget
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from mptt.admin import DraggableMPTTAdmin
@@ -5,8 +7,17 @@ from mptt.admin import DraggableMPTTAdmin
 from .models import Slide, Topic
 
 
+class SlideAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Slide
+        fields = ('title', 'button_text', 'content', 'weight')
+
+
 class SlideAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'weight')
+    form = SlideAdminForm
 
 
 admin.site.register(Slide, SlideAdmin)
