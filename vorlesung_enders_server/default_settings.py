@@ -167,10 +167,11 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
         'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'TextColor'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
             ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Undo', 'Redo', '-', 'RemoveFormat', 'Source', '-', 'About'],
+            ['Image', '-', 'Undo', 'Redo', '-', 'RemoveFormat', 'Source', '-', 'About'],
         ],
+        'entities': False,
     }
 }

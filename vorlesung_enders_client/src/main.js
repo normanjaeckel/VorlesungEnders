@@ -167,7 +167,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
         scope: {},
         templateUrl: 'src/projector.html',
         controllerAs: 'ctrl',
-        controller: ['$rootScope', '$scope', 'DataStore', function ($rootScope, $scope, DataStore) {
+        controller: ['$rootScope', '$scope', '$sce', 'DataStore', function ($rootScope, $scope, $sce, DataStore) {
             var ctrl = this;
             ctrl.Metadata = DataStore.getMetadata();
             $scope.$watch(
@@ -175,6 +175,9 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     return DataStore.getProjectorContent();
                 },
                 function (newValue) {
+                    if (newValue.type === 'slide' && newValue.content) {
+                        newValue.content = $sce.trustAsHtml(newValue.content);
+                    }
                     ctrl.projectorContent = newValue;
                     if (!ctrl.projectorContent.id) {
                         ctrl.projectorContent.children = DataStore.getTopics();
