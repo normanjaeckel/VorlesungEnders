@@ -1,4 +1,4 @@
-from django.core import serializers
+from constance import config
 from django.http import JsonResponse
 from django.views import View
 
@@ -9,6 +9,12 @@ class DataView(View):
 
     def get(self, request, *args, **kwargs):
         data = {}
+
+        data['metadata'] = {
+            'lecturer': config.LECTURER,
+            'eventName': config.EVENT_NAME,
+            'season': config.SEASON,
+        }
 
         data['topics'] = []
         for topic in Topic.objects.filter(parent=None):

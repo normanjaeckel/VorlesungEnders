@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from collections import OrderedDict
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mptt',
+    'constance',
+    'constance.backends.database',
     'vorlesung_enders_server',
 ]
 
@@ -141,3 +145,15 @@ STATIC_URL_PART = '/static/'
 STATIC_URL = BASE_APP_PATH + STATIC_URL_PART
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'personal_data', 'collected_static')
+
+
+# Constance - Dynamic Django settings
+# https://django-constance.readthedocs.io/en/latest/index.html
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_CONFIG = OrderedDict([
+    ('LECTURER', ('Professor Dr. Christoph Enders', 'Name des Dozenten')),
+    ('EVENT_NAME', ('Vorlesung Polizeirecht', 'Name der Veranstaltung')),
+    ('SEASON', ('Sommersemester 2017', 'Semester')),
+])

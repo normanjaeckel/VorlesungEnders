@@ -1,0 +1,1 @@
+default_app_config = 'vorlesung_enders_server.apps.VorlesungEndersServerConfig'

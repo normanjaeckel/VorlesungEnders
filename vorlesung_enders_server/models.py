@@ -45,7 +45,7 @@ class Topic(MPTTModel):
 
 
 class Slide(models.Model):
-    title =  models.CharField(
+    title = models.CharField(
         'Titel',
         max_length=255,
         help_text='Beispiel: § 3 SächsPolG: Polizeiliche Generalklausel'
@@ -66,6 +66,7 @@ class Slide(models.Model):
         help_text=('Je größer die Zahl, desto weiter hinten/unten ist der '
                    'Button einsortiert.')
     )
+
     class Meta:
         ordering = ('weight',)
         verbose_name = 'Zusatzfolie'

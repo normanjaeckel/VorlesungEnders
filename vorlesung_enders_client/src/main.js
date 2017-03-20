@@ -7,12 +7,6 @@ require('./main.css!');
 
 angular.module('vorlesung_enders_client', ['ngSanitize'])
 
-.constant('Metadata', {
-    lecturer: 'Professor Dr. Christoph Enders',
-    eventName: 'Vorlesung Polizeirecht',
-    season: 'Sommersemester 2017',
-})
-
 .constant('setProjectorContentURI', 'VorlesungEnders.setProjectorContent')
 
 .constant('firstSlide', {
@@ -23,11 +17,15 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
 .factory('DataStore', [
     'firstSlide',
     function (firstSlide) {
-        var topics = [],
+        var metadata = {},
+            topics = [],
             slides = [],
             currentTopic = firstSlide,
             projectorContent = firstSlide;
         return {
+            getMetadata: function () {
+                return metadata;
+            },
             getTopics: function () {
                 return topics;
             },
@@ -41,6 +39,7 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                 return projectorContent;
             },
             setStore: function (data) {
+                metadata = data.metadata;
                 topics = data.topics;
                 slides = data.slides;
             },
@@ -168,9 +167,9 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
         scope: {},
         templateUrl: 'src/projector.html',
         controllerAs: 'ctrl',
-        controller: ['$rootScope', '$scope', 'Metadata', 'DataStore', function ($rootScope, $scope, Metadata, DataStore) {
+        controller: ['$rootScope', '$scope', 'DataStore', function ($rootScope, $scope, DataStore) {
             var ctrl = this;
-            ctrl.Metadata = Metadata;
+            ctrl.Metadata = DataStore.getMetadata();
             $scope.$watch(
                 function () {
                     return DataStore.getProjectorContent();
@@ -199,9 +198,9 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
             scope: {},
             templateUrl: 'src/controlPanel.html',
             controllerAs: 'ctrl',
-            controller: ['$rootScope', '$scope', 'Metadata', 'DataStore', 'TopicTree', function ($rootScope, $scope, Metadata, DataStore, TopicTree) {
+            controller: ['$rootScope', '$scope', 'DataStore', 'TopicTree', function ($rootScope, $scope, DataStore, TopicTree) {
                 var ctrl = this;
-                ctrl.Metadata = Metadata;
+                ctrl.Metadata = DataStore.getMetadata();
                 ctrl.slides = DataStore.getSlides();
                 ctrl.topics = DataStore.getTopics();
 

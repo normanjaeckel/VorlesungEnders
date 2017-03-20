@@ -20,6 +20,6 @@ DJANGO_SETTINGS_MODULE = ''
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJANGO_SETTINGS_MODULE)
 
-from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application  # flake8: noqa
 
 application = get_wsgi_application()
