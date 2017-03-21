@@ -15,25 +15,9 @@
 
 <h2>Gliederung</h2>
 
-<p>
-  Aktueller Gliederungspunkt: {{ ctrl.currentTopic.allMarks }} {{ ctrl.currentTopic.title }}
-  <span ng-show="ctrl.currentTopic.highlight != null">
-    (Unterpunkt hervorgehoben)
-  </span>
-  <span ng-show="ctrl.currentTopic.highlight == null">
-    (Überblick)
-  </span>
-</p>
-
-<button ng-click="ctrl.topicBack(50)">– 50</button>
-<button ng-click="ctrl.topicBack(10)">– 10</button>
-<button ng-click="ctrl.topicBack(1)">– 1</button>
-
+<button ng-click="ctrl.topicBack(1)">Zurück</button>
 &harr;
-
-<button ng-click="ctrl.topicForward(1)">+ 1</button>
-<button ng-click="ctrl.topicForward(10)">+ 10</button>
-<button ng-click="ctrl.topicForward(50)">+ 50</button>
+<button ng-click="ctrl.topicForward(1)">Vor</button>
 
 
 <h2>Zusatzfolien</h2>
@@ -43,9 +27,12 @@
   Zurück zur Gliederung
 </p>
 
-<button class="slide-button" ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
-  {{ slide.button_text }}
-</button>
+<p>
+  <button class="slide-button" ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
+    {{ slide.button_text }}
+  </button>
+</p>
+
 
 <h2>Gliederung im Überblick</h2>
 
@@ -55,7 +42,15 @@
 
 <script type="text/ng-template"  id="tree_item_renderer.html">
   <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
-  {{ topic.allMarks }} {{ topic.title }}
+  <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id}">
+      {{ topic.allMarks }} {{ topic.title }}
+      <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">
+        (Unterpunkt hervorgehoben)
+      </span>
+      <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight == null">
+        (Überblick)
+      </span>
+  </span>
   <ul class="topic-tree">
     <li ng-repeat="topic in topic.children" ng-include="'tree_item_renderer.html'"></li>
   </ul>
@@ -64,9 +59,7 @@
 
 <h2>Sonstiges</h2>
 
-<button ng-click="ctrl.switchToProjector()">
-  Zum Projektor
-</button>
+<button ng-click="ctrl.switchToProjector()">Zum Projektor</button>
 
 <a href="/app/admin/"><button>Zur Administration</button></a>
 
