@@ -2,6 +2,10 @@ body {
   font-family: sans;
 }
 
+.primary-control {
+  font-size: 150%;
+}
+
 .slide-button {
   margin-right: 0.5em;
 }

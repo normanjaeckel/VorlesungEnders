@@ -15,9 +15,9 @@
 
 <h2>Gliederung</h2>
 
-<button ng-click="ctrl.topicBack(1)">Zurück</button>
-&harr;
-<button ng-click="ctrl.topicForward(1)">Vor</button>
+<button class="primary-control" ng-click="ctrl.topicBack(1)">Zurück</button>
+<span class="primary-control">&harr;</span>
+<button class="primary-control" ng-click="ctrl.topicForward(1)">Vor</button>
 
 
 <h2>Zusatzfolien</h2>
@@ -42,7 +42,7 @@
 
 <script type="text/ng-template"  id="tree_item_renderer.html">
   <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
-  <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id}">
+  <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id || ctrl.currentTopic.highlight === topic.id}">
       {{ topic.allMarks }} {{ topic.title }}
       <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">
         (Unterpunkt hervorgehoben)
