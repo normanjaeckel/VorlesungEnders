@@ -8,5 +8,6 @@ from . import views
 
 urlpatterns = [
     url(r'^data/$', views.DataView.as_view()),
+    url(r'^backup/$', views.BackupView.as_view()),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL_PART, document_root=settings.STATIC_ROOT)

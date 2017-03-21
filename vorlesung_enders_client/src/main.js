@@ -269,10 +269,6 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     );
                 };
 
-                ctrl.switchToProjector = function () {
-                    $rootScope.showProjector = true;
-                };
-
                 ctrl.activateSlideButton = function (slide) {
                     updateStatus(
                         DataStore.setProjectorContent({
@@ -283,6 +279,11 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                         })
                     );
                 };
+
+                ctrl.switchToProjector = function () {
+                    $rootScope.showProjector = true;
+                };
+
             }],
         };
     }

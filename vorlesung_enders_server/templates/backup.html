@@ -1,0 +1,50 @@
+{% load mptt_tags %}
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>VorlesungEnders Projektionen Backup</title>
+  <style>
+    ul {
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <p>{{ config.LECTURER }} · {{ config.EVENT_NAME }} · {{ config.SEASON }}</p>
+  <h1>Alle Inhalte im Überblick</h1>
+  <p>Sie können die gesamte Seite markieren (<code>Strg+A</code>), kopieren (<code>Strg+C</code>) und in LibreOffice oder MS Word einfügen (<code>Strg+V</code>), um die Inhalte weiter zu verarbeiten.</p>
+</header>
+
+<h2>Gliederung</h2>
+
+{% full_tree_for_model vorlesung_enders_server.Topic as nodes %}
+
+<ul>
+  {% recursetree nodes %}
+    <li>
+      {{ node.mark }} {{ node.title }}
+      {% if not node.is_leaf_node %}
+        <ul>
+          {{ children }}
+        </ul>
+      {% endif %}
+    </li>
+  {% endrecursetree %}
+</ul>
+
+<h2>Zusatzfolien</h2>
+
+{% for slide in slides %}
+  <h3>{{ slide.title }}</h3>
+  {{ slide.content | safe}}
+  <hr>
+{% empty %}
+  <p>Keine Zusatzfolien vorhanden</p>
+{% endfor %}
+
+</body>
+</html>
