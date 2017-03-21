@@ -49,10 +49,17 @@
 
 <h2>Gliederung im Überblick</h2>
 
-<p ng-repeat="topic in ctrl.topics">
+<ul class="topic-tree">
+  <li ng-repeat="topic in ctrl.topics" ng-include="'tree_item_renderer.html'"></li>
+</ul>
+
+<script type="text/ng-template"  id="tree_item_renderer.html">
   <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
   {{ topic.allMarks }} {{ topic.title }}
-</p>
+  <ul class="topic-tree">
+    <li ng-repeat="topic in topic.children" ng-include="'tree_item_renderer.html'"></li>
+  </ul>
+</script>
 
 
 <h2>Sonstiges</h2>

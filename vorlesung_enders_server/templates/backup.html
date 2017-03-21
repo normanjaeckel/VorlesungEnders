@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <title>VorlesungEnders Projektionen Backup</title>
   <style>
-    ul {
+    .topic-tree {
       list-style: none;
     }
   </style>
@@ -23,12 +23,12 @@
 
 {% full_tree_for_model vorlesung_enders_server.Topic as nodes %}
 
-<ul>
+<ul class="topic-tree">
   {% recursetree nodes %}
     <li>
       {{ node.mark }} {{ node.title }}
       {% if not node.is_leaf_node %}
-        <ul>
+        <ul class="topic-tree">
           {{ children }}
         </ul>
       {% endif %}

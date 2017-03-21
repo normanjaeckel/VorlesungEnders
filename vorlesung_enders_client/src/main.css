@@ -6,6 +6,10 @@ body {
   margin-right: 0.5em;
 }
 
+.topic-tree {
+  list-style: none;
+}
+
 .projector-header {
   text-align: center;
 }
