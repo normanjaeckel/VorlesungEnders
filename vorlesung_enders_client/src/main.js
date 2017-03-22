@@ -233,6 +233,14 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     );
                 };
 
+                ctrl.keydown = function (keydown) {
+                    if (keydown.key === 'ArrowRight') {
+                        ctrl.topicForward(1);
+                    } else if (keydown.key === 'ArrowLeft') {
+                        ctrl.topicBack(1);
+                    }
+                };
+
                 ctrl.toCurrentTopic = function () {
                     updateStatus(
                         DataStore.setProjectorContent(ctrl.currentTopic)

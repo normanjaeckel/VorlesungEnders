@@ -1,66 +1,70 @@
-<p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
+<div ng-keydown="ctrl.keydown($event)">
 
-<h1>Foliensteuerung</h1>
+  <p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
 
-<p>
-  Aktuell auf dem Projektor: {{ ctrl.projectorContent.allMarks }} {{ ctrl.projectorContent.title }}
-  <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight != null">
-    (Unterpunkt hervorgehoben)
-  </span>
-  <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight == null">
-    (Überblick)
-  </span>
-</p>
+  <h1>Foliensteuerung</h1>
 
-
-<h2>Gliederung</h2>
-
-<button class="primary-control" ng-click="ctrl.topicBack(1)">Zurück</button>
-<span class="primary-control">&harr;</span>
-<button class="primary-control" ng-click="ctrl.topicForward(1)">Vor</button>
+  <p>
+    Aktuell auf dem Projektor: {{ ctrl.projectorContent.allMarks }} {{ ctrl.projectorContent.title }}
+    <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight != null">
+      (Unterpunkt hervorgehoben)
+    </span>
+    <span ng-show="ctrl.projectorContent.type === 'topic' && ctrl.projectorContent.highlight == null">
+      (Überblick)
+    </span>
+  </p>
 
 
-<h2>Zusatzfolien</h2>
+  <h2>Gliederung</h2>
 
-<p>
-  <button ng-click="ctrl.toCurrentTopic()" ng-disabled="ctrl.currentTopic == ctrl.projectorContent">&curarr;</button>
-  Zurück zur Gliederung
-</p>
-
-<p>
-  <button class="slide-button" ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
-    {{ slide.button_text }}
-  </button>
-</p>
+  <button class="primary-control" ng-click="ctrl.topicBack(1)">Zurück</button>
+  <span class="primary-control">&harr;</span>
+  <button class="primary-control" ng-click="ctrl.topicForward(1)">Vor</button>
 
 
-<h2>Gliederung im Überblick</h2>
+  <h2>Zusatzfolien</h2>
 
-<ul class="topic-tree">
-  <li ng-repeat="topic in ctrl.topics" ng-include="'tree_item_renderer.html'"></li>
-</ul>
+  <p>
+    <button ng-click="ctrl.toCurrentTopic()" ng-disabled="ctrl.currentTopic == ctrl.projectorContent">&curarr;</button>
+    Zurück zur Gliederung
+  </p>
 
-<script type="text/ng-template"  id="tree_item_renderer.html">
-  <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
-  <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id || ctrl.currentTopic.highlight === topic.id}">
-      {{ topic.allMarks }} {{ topic.title }}
-      <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">
-        (Unterpunkt hervorgehoben)
-      </span>
-      <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight == null">
-        (Überblick)
-      </span>
-  </span>
+  <p>
+    <button class="slide-button" ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
+      {{ slide.button_text }}
+    </button>
+  </p>
+
+
+  <h2>Gliederung im Überblick</h2>
+
   <ul class="topic-tree">
-    <li ng-repeat="topic in topic.children" ng-include="'tree_item_renderer.html'"></li>
+    <li ng-repeat="topic in ctrl.topics" ng-include="'tree_item_renderer.html'"></li>
   </ul>
-</script>
+
+  <script type="text/ng-template"  id="tree_item_renderer.html">
+    <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
+    <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id || ctrl.currentTopic.highlight === topic.id}">
+        {{ topic.allMarks }} {{ topic.title }}
+        <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">
+          (Unterpunkt hervorgehoben)
+        </span>
+        <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight == null">
+          (Überblick)
+        </span>
+    </span>
+    <ul class="topic-tree">
+      <li ng-repeat="topic in topic.children" ng-include="'tree_item_renderer.html'"></li>
+    </ul>
+  </script>
 
 
-<h2>Sonstiges</h2>
+  <h2>Sonstiges</h2>
 
-<button ng-click="ctrl.switchToProjector()">Zum Projektor</button>
+  <button ng-click="ctrl.switchToProjector()">Zum Projektor</button>
 
-<a href="/app/admin/"><button>Zur Administration</button></a>
+  <a href="/app/admin/"><button>Zur Administration</button></a>
 
-<a href="/app/backup/"><button>Backup</button></a>
+  <a href="/app/backup/"><button>Backup</button></a>
+
+</div>
