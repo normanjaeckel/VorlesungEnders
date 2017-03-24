@@ -2,10 +2,11 @@ var angular = require('angular'),
     autobahn = require('autobahn'),
     _ = require('lodash');
 
+require('angular-filter/dist/angular-filter.js');
 require('angular-sanitize');
 require('./main.css!');
 
-angular.module('vorlesung_enders_client', ['ngSanitize'])
+angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
 
 .constant('setProjectorContentURI', 'VorlesungEnders.setProjectorContent')
 

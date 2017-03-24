@@ -52,13 +52,19 @@ class Slide(models.Model):
     )
     button_text = models.CharField(
         'Text für den Button',
-        max_length=20,
+        max_length=255,
         help_text='Maximal 20 Zeichen. Beispiel: § 3 PolG'
     )
     content = models.TextField(
         'Inhalt (HTML)',
         blank=True,
         help_text='Beispiel: &lt;p&gt;Erster Absatz&lt;/p&gt;&lt;p&gt;Zweiter Absatz&lt;/p&gt;'
+    )
+    category = models.CharField(
+        'Kategorie',
+        max_length=255,
+        default='Vorschriften',
+        help_text='Beispiel: Fälle'
     )
     weight = models.IntegerField(
         'Gewichtung',
@@ -68,7 +74,7 @@ class Slide(models.Model):
     )
 
     class Meta:
-        ordering = ('weight',)
+        ordering = ('category', 'weight',)
         verbose_name = 'Zusatzfolie'
         verbose_name_plural = 'Zusatzfolien'
 
@@ -80,5 +86,6 @@ class Slide(models.Model):
             'id': self.id,
             'title': self.title,
             'button_text': self.button_text,
+            'category': self.category,
             'content': self.content
         }

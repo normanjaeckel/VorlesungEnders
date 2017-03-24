@@ -38,10 +38,15 @@
 
 <h2>Zusatzfolien</h2>
 
-{% for slide in slides %}
-  <h3>{{ slide.title }}</h3>
-  {{ slide.content | safe}}
-  <hr>
+{% regroup slides by category as slides_list %}
+
+{% for category in slides_list %}
+  <h3>{{ category.grouper }}</h3>
+  {% for slide in category.list %}
+    <h4>{{ slide.title }}</h4>
+    {{ slide.content | safe}}
+    <hr>
+  {% endfor %}
 {% empty %}
   <p>Keine Zusatzfolien vorhanden</p>
 {% endfor %}

@@ -9,6 +9,7 @@ System.config({
 
   map: {
     "angular": "github:angular/bower-angular@1.6.3",
+    "angular-filter": "npm:angular-filter@0.5.15",
     "angular-sanitize": "github:angular/bower-angular-sanitize@1.6.3",
     "autobahn": "npm:autobahn@0.11.2",
     "css": "github:systemjs/plugin-css@0.1.33",
@@ -81,6 +82,9 @@ System.config({
     },
     "github:jspm/nodelibs-zlib@0.1.0": {
       "browserify-zlib": "npm:browserify-zlib@0.1.4"
+    },
+    "npm:angular-filter@0.5.15": {
+      "angular": "npm:angular@1.6.3"
     },
     "npm:are-we-there-yet@1.1.2": {
       "delegates": "npm:delegates@1.0.0",

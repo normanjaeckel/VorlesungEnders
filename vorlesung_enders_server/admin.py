@@ -12,11 +12,11 @@ class SlideAdminForm(forms.ModelForm):
 
     class Meta:
         model = Slide
-        fields = ('title', 'button_text', 'content', 'weight')
+        fields = ('title', 'button_text', 'content', 'category', 'weight')
 
 
 class SlideAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'weight')
+    list_display = ('__str__', 'category', 'weight')
     form = SlideAdminForm
 
 

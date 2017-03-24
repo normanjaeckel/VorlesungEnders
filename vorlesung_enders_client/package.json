@@ -12,6 +12,7 @@
   "jspm": {
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.6.3",
+      "angular-filter": "npm:angular-filter@^0.5.15",
       "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.3",
       "autobahn": "npm:autobahn@^0.11.2",
       "css": "github:systemjs/plugin-css@^0.1.33",

@@ -29,11 +29,14 @@
     Zurück zur Gliederung
   </p>
 
-  <p>
-    <button class="slide-button" ng-repeat="slide in ctrl.slides" ng-click="ctrl.activateSlideButton(slide)">
-      {{ slide.button_text }}
-    </button>
-  </p>
+  <div ng-repeat="(category, slides) in ctrl.slides | groupBy: 'category'">
+    <h3>{{ category }}</h3>
+    <p>
+      <button class="slide-button" ng-repeat="slide in slides" ng-click="ctrl.activateSlideButton(slide)">
+        {{ slide.button_text }}
+      </button>
+    </p>
+  </div>
 
 
   <h2>Gliederung im Überblick</h2>
@@ -45,7 +48,7 @@
   <script type="text/ng-template"  id="tree_item_renderer.html">
     <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
     <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id || ctrl.currentTopic.highlight === topic.id}">
-        {{ topic.allMarks }} {{ topic.title }}
+        {{ topic.mark }} {{ topic.title }}
         <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">
           (Unterpunkt hervorgehoben)
         </span>
