@@ -15,6 +15,7 @@ class DataView(View):
             'lecturer': config.LECTURER,
             'eventName': config.EVENT_NAME,
             'season': config.SEASON,
+            'projectorContentFontSize': config.PROJECTOR_CONTENT_FONT_SIZE,
         }
 
         data['topics'] = []

@@ -157,6 +157,7 @@ CONSTANCE_CONFIG = OrderedDict([
     ('LECTURER', ('Professor Dr. Christoph Enders', 'Name des Dozenten')),
     ('EVENT_NAME', ('Vorlesung Polizeirecht', 'Name der Veranstaltung')),
     ('SEASON', ('Sommersemester 2017', 'Semester')),
+    ('PROJECTOR_CONTENT_FONT_SIZE', (150, 'Skalierung der Schriftgröße auf dem Projektor.')),
 ])
 
 

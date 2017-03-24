@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    gulpJspm = require('gulp-jspm'),
     path = require('path');
 
 var DEPLOYMENT_DIRECTORY_NAME = path.join('..', 'personal_data');
@@ -13,9 +14,18 @@ gulp.task('clientStatics', function () {
         'index.html',
         'jspm_packages/system.js',
         'config.js',
-        'build.js',
     ])
     .pipe(gulp.dest(path.join(DEPLOYMENT_DIRECTORY_NAME, 'client')));
 });
 
-gulp.task('default', ['clientSrc', 'clientStatics'], function () {});
+gulp.task('jspmBundle', function () {
+    return gulp.src('src/main.js')
+    .pipe(gulpJspm({fileName: 'build'}))
+    .pipe(gulp.dest(path.join(DEPLOYMENT_DIRECTORY_NAME, 'client')));
+});
+
+gulp.task('default', [
+    'clientSrc',
+    'clientStatics',
+    'jspmBundle',
+], function () {});

@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-jspm": "^0.5.13",
     "jspm": "^0.16.52"
   },
   "devDependencies": {

@@ -184,6 +184,11 @@ angular.module('vorlesung_enders_client', ['ngSanitize'])
                     }
                 }
             );
+            ctrl.getProjectorContentStyle = function () {
+                return {
+                    'font-size': ctrl.Metadata.projectorContentFontSize + '%',
+                };
+            };
             ctrl.switchToControlPanel = function () {
                 $rootScope.showProjector = false;
             };

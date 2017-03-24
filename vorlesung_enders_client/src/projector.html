@@ -2,7 +2,7 @@
   <p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
 </div>
 
-<div class="projector-content">
+<div class="projector-content" ng-style="ctrl.getProjectorContentStyle()">
   <div ng-if="ctrl.projectorContent.type === 'topic'">
     <h1>{{ ctrl.projectorContent.allMarks }} {{ ctrl.projectorContent.title }}</h1>
     <p ng-repeat="child in ctrl.projectorContent.children" ng-class="{'highlight': ctrl.projectorContent.highlight === child.id}">
