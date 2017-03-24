@@ -27,3 +27,7 @@ body {
 .highlight {
   font-weight: bold;
 }
+
+.slide-heading {
+  text-align: center;
+}
