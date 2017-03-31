@@ -207,11 +207,12 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
             scope: {},
             templateUrl: 'src/controlPanel.html',
             controllerAs: 'ctrl',
-            controller: ['$rootScope', '$scope', 'DataStore', 'TopicTree', function ($rootScope, $scope, DataStore, TopicTree) {
+            controller: ['$rootScope', '$scope', 'firstSlide', 'DataStore', 'TopicTree', function ($rootScope, $scope, firstSlide, DataStore, TopicTree) {
                 var ctrl = this;
                 ctrl.Metadata = DataStore.getMetadata();
-                ctrl.slides = DataStore.getSlides();
+                ctrl.firstSlide = firstSlide;
                 ctrl.topics = DataStore.getTopics();
+                ctrl.slides = DataStore.getSlides();
 
                 $scope.$watch(
                     function () {
@@ -250,6 +251,11 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
                 ctrl.toCurrentTopic = function () {
                     updateStatus(
                         DataStore.setProjectorContent(ctrl.currentTopic)
+                    );
+                };
+                ctrl.toFirstSlide = function () {
+                    updateStatus(
+                        DataStore.setProjectorContent(firstSlide)
                     );
                 };
                 ctrl.toTopic = function (topic) {

@@ -53,7 +53,7 @@ class Slide(models.Model):
     button_text = models.CharField(
         'Text für den Button',
         max_length=255,
-        help_text='Maximal 20 Zeichen. Beispiel: § 3 PolG'
+        help_text='Bitte nur wenige Zeichen verwenden. Beispiel: § 3 PolG'
     )
     content = models.TextField(
         'Inhalt (HTML)',

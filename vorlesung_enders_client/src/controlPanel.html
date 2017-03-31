@@ -26,7 +26,7 @@
 
   <p>
     <button ng-click="ctrl.toCurrentTopic()" ng-disabled="ctrl.currentTopic == ctrl.projectorContent">&curarr;</button>
-    Zurück zur Gliederung
+    Zurück zum aktuellen Gliederungspunkt
   </p>
 
   <div ng-repeat="(category, slides) in ctrl.slides | groupBy: 'category'">
@@ -39,7 +39,12 @@
   </div>
 
 
-  <h2>Gliederung im Überblick</h2>
+  <h2>Alle Gliederungspunkte</h2>
+
+  <button ng-click="ctrl.toFirstSlide()">&curarr;</button>
+  <span ng-class="{'highlight': ctrl.currentTopic === ctrl.firstSlide}">
+    {{ ctrl.firstSlide.title }} (Überblick)
+  </span>
 
   <ul class="topic-tree">
     <li ng-repeat="topic in ctrl.topics" ng-include="'tree_item_renderer.html'"></li>
