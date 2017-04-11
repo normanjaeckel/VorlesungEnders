@@ -18,10 +18,13 @@
     <h1>Anwendung lädt …</h1>
   </div>
   <div ng-if="ready">
-    <div ng-if="showProjector">
+    <div ng-if="show === 'home'">
+      <home> </home>
+    </div>
+    <div ng-if="show === 'projector'">
       <projector> </projector>
     </div>
-    <div ng-if="!showProjector">
+    <div ng-if="show === 'controlPanel'">
       <control-panel> </control-panel>
     </div>
   </div>

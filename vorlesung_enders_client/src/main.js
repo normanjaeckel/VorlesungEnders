@@ -61,6 +61,7 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
         function (response) {
             DataStore.setStore(response.data);
             $rootScope.ready = true;
+            $rootScope.show = 'home';
         },
         function (error) {
             console.error(error);
@@ -162,6 +163,26 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
     };
 }])
 
+.directive('home', function () {
+    return {
+        restrict: 'E',
+        scope: {},
+        templateUrl: 'src/home.html',
+        controllerAs: 'ctrl',
+        controller: ['$rootScope', function ($rootScope) {
+            var ctrl = this;
+
+            ctrl.switchToProjector = function () {
+                $rootScope.show = 'projector';
+            };
+
+            ctrl.switchToControlPanel = function () {
+                $rootScope.show = 'controlPanel';
+            };
+        }],
+    };
+})
+
 .directive('projector', function () {
     return {
         restrict: 'E',
@@ -191,7 +212,7 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
                 };
             };
             ctrl.switchToControlPanel = function () {
-                $rootScope.showProjector = false;
+                $rootScope.show = 'controlPanel';
             };
         }],
 
@@ -301,7 +322,7 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
                 };
 
                 ctrl.switchToProjector = function () {
-                    $rootScope.showProjector = true;
+                    $rootScope.show = 'projector';
                 };
 
             }],
