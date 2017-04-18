@@ -101,15 +101,15 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
 .factory('TopicTree', ['DataStore', 'firstSlide', function (DataStore, firstSlide) {
     var getData = function (topic) {
         var data = [];
-        data.push({
-            type: 'topic',
-            id: topic.id,
-            title: topic.title,
-            mark: topic.mark,
-            allMarks: topic.allMarks,
-            children: topic.children,
-        });
         if (topic.children.length > 0) {
+            data.push({
+                type: 'topic',
+                id: topic.id,
+                title: topic.title,
+                mark: topic.mark,
+                allMarks: topic.allMarks,
+                children: topic.children,
+            });
             angular.forEach(topic.children, function (child) {
                 data.push({
                     type: 'topic',
@@ -129,6 +129,9 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
         getPrevious: function (topic) {
             var allProjectorContent = [];
             angular.forEach(DataStore.getTopics(), function (rootTopic) {
+                allProjectorContent.push(
+                    _.assign({highlight: rootTopic.id}, firstSlide)
+                );
                 allProjectorContent = allProjectorContent.concat(getData(rootTopic));
             });
             var index = _.findIndex(allProjectorContent, function (item) {
@@ -147,6 +150,9 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
         getNext: function (topic) {
             var allProjectorContent = [];
             angular.forEach(DataStore.getTopics(), function (rootTopic) {
+                allProjectorContent.push(
+                    _.assign({highlight: rootTopic.id}, firstSlide)
+                );
                 allProjectorContent = allProjectorContent.concat(getData(rootTopic));
             });
             var index = _.findIndex(allProjectorContent, function (item) {

@@ -51,7 +51,7 @@
   </ul>
 
   <script type="text/ng-template"  id="tree_item_renderer.html">
-    <button ng-click="ctrl.toTopic(topic)">&curarr;</button>
+    <button ng-show="topic.children.length > 0" ng-click="ctrl.toTopic(topic)">&curarr;</button>
     <span ng-class="{'highlight': ctrl.currentTopic.id === topic.id || ctrl.currentTopic.highlight === topic.id}">
         {{ topic.mark }} {{ topic.title }}
         <span ng-show="ctrl.currentTopic.id === topic.id && ctrl.currentTopic.highlight != null">

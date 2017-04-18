@@ -15,6 +15,10 @@ body {
   list-style: none;
 }
 
+.topic-tree li {
+  line-height: 2em;;
+}
+
 .projector-header {
   text-align: center;
 }
