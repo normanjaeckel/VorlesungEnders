@@ -20,6 +20,9 @@ class SlideAdmin(admin.ModelAdmin):
     form = SlideAdminForm
 
 
+# TODO: Expand tree by default
+# https://github.com/django-mptt/django-mptt/commit/c4da901473513c0304c314738b53680145001b39
+
 admin.site.register(Slide, SlideAdmin)
 admin.site.register(Topic, DraggableMPTTAdmin)
 admin.site.unregister(Group)

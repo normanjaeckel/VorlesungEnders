@@ -13,7 +13,7 @@ Run:
 
     $ python3 -m venv .virtualenv
     $ source .virtualenv/bin/activate
-    $ pip install -U pip setuptools six psycopg2
+    $ pip install -U pip setuptools psycopg2
     $ pip install --requirement requirements.txt
     $ python manage.py migrate
     $ python manage.py createsuperuser

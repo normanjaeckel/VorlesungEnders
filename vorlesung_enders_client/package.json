@@ -4,17 +4,17 @@
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-jspm": "^0.5.13",
-    "jspm": "^0.16.52"
+    "jspm": "^0.16.53"
   },
   "devDependencies": {
     "jshint": "^2.9.4"
   },
   "jspm": {
     "dependencies": {
-      "angular": "github:angular/bower-angular@^1.6.3",
-      "angular-filter": "npm:angular-filter@^0.5.15",
-      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.3",
-      "autobahn": "npm:autobahn@^0.11.2",
+      "angular": "github:angular/bower-angular@^1.6.4",
+      "angular-filter": "npm:angular-filter@^0.5.16",
+      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.6.4",
+      "autobahn": "npm:autobahn@^17.5.1",
       "css": "github:systemjs/plugin-css@^0.1.33",
       "lodash": "npm:lodash@^4.17.4"
     },
