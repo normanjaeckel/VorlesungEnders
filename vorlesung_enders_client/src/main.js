@@ -175,8 +175,10 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
         scope: {},
         templateUrl: 'src/home.html',
         controllerAs: 'ctrl',
-        controller: ['$rootScope', function ($rootScope) {
+        controller: ['$rootScope', 'DataStore', function ($rootScope, DataStore) {
             var ctrl = this;
+
+            ctrl.Metadata = DataStore.getMetadata();
 
             ctrl.switchToProjector = function () {
                 $rootScope.show = 'projector';

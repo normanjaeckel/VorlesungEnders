@@ -16,6 +16,7 @@ class DataView(View):
             'eventName': config.EVENT_NAME,
             'season': config.SEASON,
             'projectorContentFontSize': config.PROJECTOR_CONTENT_FONT_SIZE,
+            'openerPageURL': config.OPENER_PAGE_URL,
         }
 
         data['topics'] = []

@@ -158,6 +158,7 @@ CONSTANCE_CONFIG = OrderedDict([
     ('EVENT_NAME', ('Vorlesung Polizeirecht', 'Name der Veranstaltung')),
     ('SEASON', ('Sommersemester 2017', 'Semester')),
     ('PROJECTOR_CONTENT_FONT_SIZE', (150, 'Skalierung der Schriftgröße auf dem Projektor.')),
+    ('OPENER_PAGE_URL', ('http://enders.learningprogress.leo.jura.uni-leipzig.de', 'URL der Vorschaltseite für alle Instanzen.')),
 ])
 
 

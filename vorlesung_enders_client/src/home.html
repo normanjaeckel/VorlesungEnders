@@ -1,3 +1,5 @@
+<p>{{ ctrl.Metadata.lecturer }} · {{ ctrl.Metadata.eventName }} · {{ ctrl.Metadata.season }}</p>
+
 <h1>VorlesungEnders Projektionen</h1>
 
 <p>Willkommen zum Projektionsprogramm für Vorlesungen.</p>
@@ -13,3 +15,9 @@
 <button ng-click="ctrl.switchToControlPanel()">
   Zur Foliensteuerung u. a.
 </button>
+
+<a ng-href="{{ ctrl.Metadata.openerPageURL }}">
+  <button>
+    Zur Vorschaltseite
+  </button>
+</a>
