@@ -13,7 +13,8 @@ Run:
 
     $ python3 -m venv .virtualenv
     $ source .virtualenv/bin/activate
-    $ pip install -U pip setuptools psycopg2
+    $ pip install -U setuptools pip
+    $ pip install psycopg2
     $ pip install --requirement requirements.txt
     $ python manage.py migrate
     $ python manage.py createsuperuser
@@ -26,4 +27,4 @@ Run:
     $ node_modules/.bin/gulp
     $ cd ..
 
-    $ PYTHONPATH=`pwd`:$PYTHONPATH crossbar start
+    $ PYTHONPATH=`pwd`:$PYTHONPATH CROSSBAR_DIR=`pwd`/.crossbar crossbar start
