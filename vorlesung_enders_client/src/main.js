@@ -60,6 +60,7 @@ angular.module('vorlesung_enders_client', ['angular.filter', 'ngSanitize'])
     .then(
         function (response) {
             DataStore.setStore(response.data);
+            $rootScope.Metadata = DataStore.getMetadata();
             $rootScope.ready = true;
             $rootScope.show = 'home';
         },

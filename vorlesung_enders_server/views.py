@@ -17,6 +17,7 @@ class DataView(View):
             'season': config.SEASON,
             'projectorContentFontSize': config.PROJECTOR_CONTENT_FONT_SIZE,
             'openerPageURL': config.OPENER_PAGE_URL,
+            'backgroundColor': config.BACKGROUND_COLOR,
         }
 
         data['topics'] = []

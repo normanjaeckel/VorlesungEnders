@@ -159,6 +159,7 @@ CONSTANCE_CONFIG = OrderedDict([
     ('SEASON', ('Wintersemester/Sommersemester YYYY', 'Semester')),
     ('PROJECTOR_CONTENT_FONT_SIZE', (150, 'Skalierung der Schriftgröße auf dem Projektor.')),
     ('OPENER_PAGE_URL', ('http://enders.learningprogress.leo.jura.uni-leipzig.de', 'URL der Vorschaltseite für alle Instanzen.')),
+    ('BACKGROUND_COLOR', ('#FFFFFF', 'Hintergrundfarbe als CSS Hexadezimalwert (siehe https://www.w3schools.com/colors/colors_hexadecimal.asp)')),
 ])
 
 
